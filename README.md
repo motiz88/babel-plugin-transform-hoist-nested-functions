@@ -46,11 +46,6 @@ analogous to what [babel-plugin-transform-react-constant-elements]
 (https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-constant-elements/)
 does (and in fact some of the same Babel machinery is applied).
 
-
-## Benchmarks
-
-Coming soon. (Make your own with `npm run benchmark`)
-
 ## Caveats
 
 ### Experimental
@@ -78,6 +73,16 @@ hoisted.
 
 More fundamentally, **references to hoisted inner functions are allowed to escape their enclosing
 scopes**. You should determine whether this is appropriate for your code before using this plugin.
+
+## Benchmarks
+
+[Here][benchmark-url] are benchmark results from the latest successful build on `master` using Node
+v4 (make your own with `npm run benchmark`). The benchmark code is [here][benchmarks-directory] -
+each file exports a single function that is repeatedly run and timed by [Benchmark.js]
+(https://benchmarkjs.com).
+
+From these preliminary results, it appears that hoisting functions this way can in fact improve
+performance, at least in principe; but the benefit may not always be significant.
 
 ## Installation
 
@@ -142,3 +147,5 @@ PRs are very welcome. Please make sure that `test:local` passes on your branch.
 [semistandard-url]: https://github.com/Flet/semistandard
 [coverage-image]: https://img.shields.io/codecov/c/github/motiz88/babel-plugin-transform-hoist-nested-functions.svg
 [coverage-url]: https://codecov.io/gh/motiz88/babel-plugin-transform-hoist-nested-functions
+[benchmark-url]: https://circleci.com/api/v1/project/motiz88/babel-plugin-transform-hoist-nested-functions/latest/artifacts/0/$CIRCLE_ARTIFACTS/benchmark.log?filter=successful&branch=master
+[benchmarks-directory]: https://github.com/motiz88/babel-plugin-transform-hoist-nested-functions/tree/master/benchmarks
