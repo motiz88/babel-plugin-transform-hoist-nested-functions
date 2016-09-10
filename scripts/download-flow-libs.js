@@ -12,8 +12,8 @@ const files = [{
 
 (async function() {
   for (const {url, file} of files) {
-    process.stdout.write(`${url} --> ${path.relative(process.cwd(), file)}`);
     if (!await fs.exists(file)) {
+      process.stdout.write(`${url} --> ${path.relative(process.cwd(), file)}`);
       await fs.ensureDir(path.dirname(file));
       await new Promise((resolve, reject) => request(url)
         .pipe(fs.createWriteStream(file))
