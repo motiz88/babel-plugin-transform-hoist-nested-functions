@@ -13,6 +13,7 @@
     "clean": "shx rm -rf lib",
     "coverage:codecov": "nyc report --reporter=text-lcov > coverage.lcov",
     "coverage:html": "nyc report --reporter=html",
+    "download-flow-libs": "cross-env NODE_ENV=production babel-node scripts/download-flow-libs",
     "eslint:xunit-to-file": "envcheck ESLINT_FILE && compat \"npm run eslint -- --quiet -f junit --output-file $ESLINT_FILE\"",
     "eslint": "eslint *.js src test decls scripts benchmarks",
     "example": "npm run build && babel example/input.js -o example/output.js",
@@ -21,12 +22,12 @@
     "generate-fixtures": "babel-node scripts/generate-fixtures",
     "prepublish": "npm run clean && npm run build",
     "semantic-release": "semantic-release pre && npm run build && npm publish && semantic-release post",
-    "test:ci": "run-s test:coverage-and-xunit flow:check eslint:xunit-to-file benchmark:save",
+    "test:ci": "run-s download-flow-libs test:coverage-and-xunit flow:check eslint:xunit-to-file benchmark:save",
     "test:coverage-and-xunit": "cross-env NODE_ENV=test nyc --silent mocha --reporter mocha-junit-reporter",
     "test:coverage": "cross-env NODE_ENV=test nyc --silent mocha",
     "test:debug": "node-debug --no-preload --web-port 8083 _mocha",
     "test:fast": "mocha",
-    "test:local": "run-s test:coverage coverage:html eslint flow benchmark",
+    "test:local": "run-s download-flow-libs test:coverage coverage:html eslint flow benchmark",
     "test": "npm run test:ci"
   },
   "devDependencies": {
