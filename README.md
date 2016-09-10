@@ -82,7 +82,7 @@ each file exports a single function that is repeatedly run and timed by [Benchma
 (https://benchmarkjs.com).
 
 From these preliminary results, it appears that hoisting functions this way can in fact improve
-performance, at least in principe; but the benefit may not always be significant.
+performance, at least in principle; but the benefit may not always be significant.
 
 ## Installation
 
