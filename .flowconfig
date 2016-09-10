@@ -1,0 +1,22 @@
+[ignore]
+<PROJECT_ROOT>/data/.*
+<PROJECT_ROOT>/lib/.*
+<PROJECT_ROOT>/test/artifacts/.*
+<PROJECT_ROOT>/test/benchmarks/.*
+<PROJECT_ROOT>/test/example/.*
+<PROJECT_ROOT>/test/fixtures/.*
+.*/node_modules/.*eslint.*
+.*/node_modules/babel-cli.*
+.*/node_modules/babel-helper-.*
+.*/node_modules/babel-plugin-.*
+.*/node_modules/cross-env/.*
+.*/node_modules/mocha.*
+.*/node_modules/npm-run-all/.*
+.*/node_modules/jsonlint/.*
+.*/node_modules/fbjs/.*
+[options]
+suppress_comment= \\(.\\|\n\\)*\\$Flow\\(FixMe\\|Issue\\)
+suppress_type=$FlowIssue
+
+[libs]
+decls/

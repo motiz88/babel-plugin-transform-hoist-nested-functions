@@ -1,0 +1,69 @@
+{
+  "extends": ["semistandard"],
+  "parser": "babel-eslint",
+  "plugins": [
+    "babel",
+    "flowtype"
+  ],
+  "rules": {
+      "babel/generator-star-spacing": [2, { "before": true, "after": true }],
+      "generator-star-spacing": 0,
+      "babel/new-cap": [2, { "newIsCap": true, "capIsNew": false }],
+      "new-cap": 0,
+      "babel/func-params-comma-dangle": [2, "never"],
+      "no-var": "error",
+      "prefer-const": "error",
+      "no-console": "error",
+      "flowtype/boolean-style": [
+        2,
+        "boolean"
+      ],
+      "flowtype/define-flow-type": 1,
+      "flowtype/delimiter-dangle": [
+        2,
+        "never"
+      ],
+      "flowtype/generic-spacing": [
+        2,
+        "never"
+      ],
+      "flowtype/require-parameter-type": [
+          1,
+          {
+              "excludeArrowFunctions": true
+          }
+      ],
+      "flowtype/require-return-type": [
+          1,
+          "always",
+          {
+              "annotateUndefined": "never",
+              "excludeArrowFunctions": true
+          }
+      ],
+      "flowtype/space-after-type-colon": [
+          1,
+          "always"
+      ],
+      "flowtype/space-before-generic-bracket": [
+        2,
+        "never"
+      ],
+      "flowtype/space-before-type-colon": [
+          1,
+          "never"
+      ],
+      "flowtype/type-id-match": 0,
+      "flowtype/union-intersection-spacing": [
+        2,
+        "always"
+      ],
+      "flowtype/use-flow-type": 1,
+      "flowtype/valid-syntax": 1
+  },
+  "settings": {
+      "flowtype": {
+          "onlyFilesWithFlowAnnotation": true
+      }
+  }
+}

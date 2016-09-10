@@ -1,27 +1,89 @@
 {
-  "version": "0.0.0",
-  "description": "Add a description for the plugin here",
-  "repository": "supreetpal/babel-plugin-boilerplate",
-  "author": "supreetpal <supreetpal@gmail.com>",
+  "description": "Babel plugin to hoist nested functions",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/motiz88/babel-plugin-transform-hoist-nested-functions.git"
+  },
+  "author": "motiz88 <motiz88@gmail.com>",
   "main": "lib/index.js",
+  "scripts": {
+    "benchmark:save": "npm run benchmark > benchmark.log",
+    "benchmark": "cross-env NODE_ENV=production babel-node scripts/benchmark",
+    "build": "cross-env BABEL_ENV=production babel src -d lib",
+    "clean": "shx rm -rf lib",
+    "coverage:codecov": "nyc report --reporter=text-lcov > coverage.lcov",
+    "coverage:html": "nyc report --reporter=html",
+    "eslint:xunit-to-file": "envcheck ESLINT_FILE && compat \"npm run eslint -- --quiet -f junit --output-file $ESLINT_FILE\"",
+    "eslint": "eslint *.js src test decls scripts benchmarks",
+    "example": "npm run build && babel example/input.js -o example/output.js",
+    "flow:check": "flow check",
+    "flow": "flow",
+    "generate-fixtures": "babel-node scripts/generate-fixtures",
+    "prepublish": "npm run clean && npm run build",
+    "semantic-release": "semantic-release pre && npm run build && npm publish && semantic-release post",
+    "test:ci": "run-s test:coverage-and-xunit flow:check eslint:xunit-to-file benchmark:save",
+    "test:coverage-and-xunit": "cross-env NODE_ENV=test nyc --silent mocha --reporter mocha-junit-reporter",
+    "test:coverage": "cross-env NODE_ENV=test nyc --silent mocha",
+    "test:debug": "node-debug --no-preload --web-port 8083 _mocha",
+    "test:fast": "mocha",
+    "test:local": "run-s test:coverage coverage:html eslint flow benchmark",
+    "test": "npm run test:ci"
+  },
   "devDependencies": {
     "babel-cli": "^6.9.0",
+    "babel-eslint": "^6.1.2",
+    "babel-plugin-istanbul": "^1.0.2",
+    "babel-plugin-syntax-jsx": "^6.13.0",
+    "babel-plugin-transform-flow-strip-types": "^6.14.0",
     "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.11.1",
     "babel-preset-stage-0": "^6.5.0",
-    "mocha": "^2.4.5"
-  },
-  "scripts": {
-    "clean": "rm -rf lib",
-    "build": "babel src -d lib",
-    "example": "npm run build && babel example/input.js -o example/output.js",
-    "test": "mocha --compilers js:babel-register",
-    "test:watch": "npm run test -- --watch",
-    "prepublish": "npm run clean && npm run build"
+    "benchmark": "^2.1.1",
+    "condition-circle": "^1.5.0",
+    "cross-env": "^2.0.1",
+    "env-check": "0.0.1",
+    "enzyme": "^2.4.1",
+    "eslint": "^3.5.0",
+    "eslint-config-semistandard": "^7.0.0",
+    "eslint-config-standard": "^6.0.0",
+    "eslint-plugin-babel": "^3.3.0",
+    "eslint-plugin-flowtype": "^2.16.1",
+    "eslint-plugin-mocha": "^4.5.1",
+    "eslint-plugin-promise": "^2.0.1",
+    "eslint-plugin-standard": "^2.0.0",
+    "flow-bin": "^0.32.0",
+    "fs-promise": "^0.5.0",
+    "jsdom": "^9.5.0",
+    "microtime": "^2.1.1",
+    "mocha": "^3.0.2",
+    "mocha-junit-reporter": "^1.12.0",
+    "mocha-lcov-reporter": "^1.2.0",
+    "npm-run-all": "^3.1.0",
+    "nyc": "^8.1.0",
+    "react": "^15.3.1",
+    "react-addons-test-utils": "^15.3.1",
+    "react-dom": "^15.3.1",
+    "request": "^2.74.0",
+    "request-promise-native": "^1.0.3",
+    "shx": "^0.1.4",
+    "semantic-release": "^4.3.5"
   },
   "keywords": [
     "babel",
     "plugin",
-    "boilerplate",
     "babel-plugin"
-  ]
+  ],
+  "license": "MIT",
+  "nyc": {
+    "all": true,
+    "include": "src/**/*.js",
+    "sourceMap": false,
+    "instrument": false
+  },
+  "release": {
+    "verifyConditions": "condition-circle"
+  },
+  "engines": {
+    "node": ">=4"
+  }
 }

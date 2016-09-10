@@ -1,0 +1,26 @@
+machine:
+  node:
+    version: 4
+  environment:
+    MOCHA_FILE: $CIRCLE_TEST_REPORTS/test-results.xml
+    ESLINT_FILE: $CIRCLE_TEST_REPORTS/eslint-results.xml
+dependencies:
+  pre:
+    - npm install -g npm@3
+test:
+  post:
+    - cp benchmark.log $CIRCLE_ARTIFACTS/
+    - mkdir -p $CIRCLE_ARTIFACTS/benchmarks
+    - cp benchmarks/*.transformed.js $CIRCLE_ARTIFACTS/benchmarks
+    - npm run coverage:html -- --report-dir $CIRCLE_ARTIFACTS/coverage
+    - npm run coverage:codecov && bash <(curl -s https://codecov.io/bash)
+checkout:
+  post:
+    - git submodule sync --recursive
+    - git submodule update --recursive --init
+deployment:
+  prod:
+    branch: master
+    commands:
+      - git show-ref --head --heads | while IFS=' ' read -r hash name; do test ! -e "${GIT_DIR:-.git}/$name" && echo $hash > "${GIT_DIR:-.git}/$name"; done
+      - npm run semantic-release || true

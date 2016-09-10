@@ -1,0 +1,3 @@
+test/fixtures
+decls/babel
+benchmarks/**/*.transformed.js

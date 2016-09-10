@@ -1,3 +1,9 @@
 node_modules
 *.log
 lib
+benchmarks/**/*.transformed.js
+decls/babel
+.nyc_output
+.vscode/GitHubIssue
+coverage
+test-results.xml
