@@ -7,7 +7,8 @@
 [![js-semistandard-style][semistandard-image]][semistandard-url]
 [![MIT License][license-image]][license-url]
 
-Babel plugin to hoist nested functions to the outermost scope possible without changing their contract.
+Babel plugin to hoist nested functions to the outermost scope possible without changing their
+contract.
 
 ## Example
 
@@ -33,14 +34,17 @@ function renderApp () {
 
 ## Motivation
 
-Patterns like [React "render callbacks"](https://discuss.reactjs.org/t/children-as-a-function-render-callbacks/626),
-that make heavy use of nested functions, incur the nonzero runtime cost of creating those functions over and over. JavaScript engines
-[don't always optimize this cost away](https://bugs.chromium.org/p/v8/issues/detail?id=505).
+Patterns like [React "render callbacks"]
+(https://discuss.reactjs.org/t/children-as-a-function-render-callbacks/626),
+that make heavy use of nested functions, incur the nonzero runtime cost of creating those
+functions over and over. JavaScript engines [don't always optimize this cost away]
+(https://bugs.chromium.org/p/v8/issues/detail?id=505).
 
-To mitigate this cost, this plugin moves functions out of inner scopes wherever possible. A function can be moved up
-through any scope that it does not reference explicitly. This is somewhat analogous to what
-[babel-plugin-transform-react-constant-elements](https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-constant-elements/)
-does (and in fact uses some of the same Babel machinery is applied).
+To mitigate this cost, this plugin moves functions out of inner scopes wherever possible. A
+function can be moved up through any scope that it does not reference explicitly. This is somewhat
+analogous to what [babel-plugin-transform-react-constant-elements]
+(https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-constant-elements/)
+does (and in fact some of the same Babel machinery is applied).
 
 
 ## Benchmarks
@@ -49,16 +53,31 @@ Coming soon. (Make your own with `npm run benchmark`)
 
 ## Caveats
 
-This transformation does lead to some observable changes in behavior. For example, given the following code:
+### Experimental
+
+This is a new, experimental plugin. Expect changes (adhering religiously to semver), and
+please, please, **PLEASE** test and benchmark your code _very thoroughly_ before using this in
+anything important.
+
+### Not 100% transparent
+
+While the plugin aims not to change the behavior of hoisted functions, the fact that they are
+reused rather than recreated does have some visible consequences.
+
+Consider the following code:
 
 ```js
 function factory () {
-  return function foo () {}; // will be hoisted to be a sibling of factory()
+  return function foo () {}; // foo() will be hoisted right above factory()
 }
-factory() === factory() // normally false, but true if hoisted
+factory() === factory(); // :arrow_left:
 ```
 
-More generally, **references to inner functions are allowed to escape their enclosing scopes**, as the transformation would be much less useful otherwise.
+That last expression evaluates to `false` in plain JavaScript, but will be `true` if `foo()` is
+hoisted. 
+
+More fundamentally, **references to hoisted inner functions are allowed to escape their enclosing
+scopes**. You should determine whether this is appropriate for your code before using this plugin.
 
 ## Installation
 
@@ -91,6 +110,25 @@ require("babel-core").transform("code", {
   plugins: ["transform-hoist-nested-functions"]
 });
 ```
+
+## Development
+
+Use npm v3: `npm install -g npm@3`
+
+```sh
+git clone https://github.com/motiz88/babel-plugin-transform-hoist-nested-functions
+cd babel-plugin-transform-hoist-nested-functions
+npm install
+# ... hackity hack hack ...
+npm run test:local # Including tests (mocha), code coverage (nyc), code style (eslint), type checks
+                   # (flow) and benchmarks.  
+```
+
+See package.json for more dev scripts you can use.
+
+## Contributing
+
+PRs are very welcome. Please make sure that `test:local` passes on your branch.
 
 [circle-image]: https://img.shields.io/circleci/project/motiz88/babel-plugin-transform-hoist-nested-functions.svg?style=flat-square
 [circle-url]: https://circleci.com/gh/motiz88/babel-plugin-transform-hoist-nested-functions
