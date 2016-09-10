@@ -14,6 +14,9 @@
 .*/node_modules/npm-run-all/.*
 .*/node_modules/jsonlint/.*
 .*/node_modules/fbjs/.*
+.*/node_modules/config-chain/.*
+.*/node_modules/npmconf/.*
+
 [options]
 suppress_comment= \\(.\\|\n\\)*\\$Flow\\(FixMe\\|Issue\\)
 suppress_type=$FlowIssue
