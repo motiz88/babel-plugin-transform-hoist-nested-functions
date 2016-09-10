@@ -1,4 +1,6 @@
 {
+  "name": "babel-plugin-transform-hoist-nested-functions",
+  "version": "0.0.0-semantic-release",
   "description": "Babel plugin to hoist nested functions",
   "repository": {
     "type": "git",
