@@ -1,8 +1,11 @@
-Read babel plugin handbook -> https://github.com/thejameskyle/babel-handbook/blob/master/translations/en/plugin-handbook.md
-
-Try http://astexplorer.net/#/Pcw9baefXI for a visual understanding.
-
 # babel-plugin-transform-hoist-nested-functions
+[![circle][circle-image]][circle-url]
+[![npm][npm-image]][npm-url]
+[![coverage][coverage-image]][coverage-url]
+
+[![semantic release][semantic-release-image]][semantic-release-url]
+[![js-semistandard-style][semistandard-image]][semistandard-url]
+[![MIT License][license-image]][license-url]
 
 Babel plugin to hoist nested functions to the outermost scope possible without changing their contract.
 
@@ -88,3 +91,16 @@ require("babel-core").transform("code", {
   plugins: ["transform-hoist-nested-functions"]
 });
 ```
+
+[circle-image]: https://img.shields.io/circleci/project/motiz88/babel-plugin-transform-hoist-nested-functions.svg?style=flat-square
+[circle-url]: https://circleci.com/gh/motiz88/babel-plugin-transform-hoist-nested-functions
+[npm-image]: https://img.shields.io/npm/v/babel-plugin-transform-hoist-nested-functions.svg?style=flat-square
+[npm-url]: https://npmjs.org/package/babel-plugin-transform-hoist-nested-functions
+[semantic-release-image]: https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=flat-square
+[semantic-release-url]: https://github.com/semantic-release/semantic-release
+[license-image]: http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
+[license-url]: http://motiz88.mit-license.org/
+[semistandard-image]: https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg?style=flat-square
+[semistandard-url]: https://github.com/Flet/semistandard
+[coverage-image]: https://img.shields.io/codecov/c/github/motiz88/babel-plugin-transform-hoist-nested-functions.svg
+[coverage-url]: https://codecov.io/gh/motiz88/babel-plugin-transform-hoist-nested-functions
