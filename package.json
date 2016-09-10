@@ -8,6 +8,9 @@
   },
   "author": "motiz88 <motiz88@gmail.com>",
   "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "benchmark:save": "npm run benchmark > benchmark.log",
     "benchmark": "cross-env NODE_ENV=production babel-node scripts/benchmark",
