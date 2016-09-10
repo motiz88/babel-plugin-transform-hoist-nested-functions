@@ -84,9 +84,6 @@ export default function ({types: t, template}: {types: BabelTypes, template: Bab
               if (usePath.parent.type === 'AssignmentExpression' && usePath.key === 'left') {
                 return true;
               }
-              if (usePath.node === path.node) {
-                break;
-              }
               if (!t.isLVal(usePath.node)) {
                 break;
               }
