@@ -1,6 +1,6 @@
 {
   "presets": ["es2015-node4"],
-  "plugins": ["syntax-flow", "syntax-class-properties", "transform-class-properties", "transform-flow-strip-types"],
+  "plugins": ["syntax-flow", "syntax-class-properties", "transform-class-properties", "transform-flow-strip-types", "transform-async-to-generator"],
   "env": {
     "development": {
       "sourceMaps": true
