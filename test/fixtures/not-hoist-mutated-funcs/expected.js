@@ -1,3 +1,5 @@
+const _hoistedMethod = new Symbol("_hoistedMethod");
+
 (function () {
   // NOTE: not hoisted
   function inner(param) {}
@@ -51,3 +53,23 @@ _inner4 = function inner(param) {};
 
   inner.name;
 })();
+
+var _hoistedAnonymousFunc2 = () => {};
+
+(class {
+  outer() {
+    // FIXME: unsafely hoisted
+    const inner = _hoistedAnonymousFunc2;
+    inner.someProp = 1;
+  }
+});
+
+(class {
+  [_hoistedMethod] = () => this.constructor.name;
+
+  outer() {
+    // NOTE: hoisted to bound method
+    const inner = this[_hoistedMethod];
+    inner.name;
+  }
+});

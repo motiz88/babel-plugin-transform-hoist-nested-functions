@@ -7,7 +7,7 @@ var _this = this;
 
 class A {
   method() {
-    // FIXME: not hoisted but we could make it a "private" method
+    // NOTE: not hoisted
     return () => this;
   }
 }

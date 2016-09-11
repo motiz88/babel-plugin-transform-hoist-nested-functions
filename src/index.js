@@ -4,6 +4,7 @@ import type { NodePath, Scope } from 'babel-traverse';
 
 class InnerScopeVisitor {
   referencedScopes: Scope[];
+  thisReferencedScopes: Scope[];
 
   ReferencedIdentifier = (path: NodePath) => {
     const binding = path.scope.getBinding(path.node.name);
@@ -20,11 +21,10 @@ class InnerScopeVisitor {
     let {scope} = path;
     while (scope && (scope = scope.getFunctionParent())) { // eslint-disable-line no-cond-assign
       if (!scope.path.isArrowFunctionExpression()) {
-        // istanbul ignore next: could be initialized elsewhere
-        if (!this.referencedScopes) {
-          this.referencedScopes = [];
+        if (!this.thisReferencedScopes) {
+          this.thisReferencedScopes = [];
         }
-        this.referencedScopes.push(scope);
+        this.thisReferencedScopes.push(scope);
         return;
       }
       scope = scope.parent;
@@ -59,6 +59,12 @@ export default function ({types: t, template}: {types: BabelTypes, template: Bab
   const declarationTemplate = template(`
     var NAME = VALUE;
   `);
+  const symbolTemplate = template(`
+    new Symbol(NAME)
+  `);
+  const thisMemberReferenceTemplate = template(`
+    this[METHOD]
+  `);
   return {
     visitor: {
       Function (path: NodePath) {
@@ -72,14 +78,33 @@ export default function ({types: t, template}: {types: BabelTypes, template: Bab
         // or the global scope.
         const innerScope = new InnerScopeVisitor();
         path.traverse(innerScope);
+        const thisReferencedScopes = uniqueScopes(innerScope.thisReferencedScopes || []);
         const referencedScopes = uniqueScopes(innerScope.referencedScopes || []);
+        const allReferencedScopes = uniqueScopes([
+          ...(innerScope.referencedScopes || []),
+          ...thisReferencedScopes
+        ]);
         const targetScope = deepestScopeOf(
           path,
-          referencedScopes
+          allReferencedScopes
             .concat(path.scope.getProgramParent())
             .filter(scope => scope !== path.scope)
-         );
-        if (!targetScope || targetScope === path.scope.parent) {
+        );
+        if (!targetScope) return;
+        if (targetScope === path.scope.parent) {
+          if (
+            this.opts.methods &&
+            targetScope.path.isClassMethod() &&
+            thisReferencedScopes.indexOf(targetScope) !== -1 &&
+            referencedScopes.indexOf(targetScope) === -1
+          ) {
+            const parentScope: Scope = targetScope.parent;
+            const containingClassBodyPath: NodePath = targetScope.path.parentPath;
+            const id = parentScope.generateUidIdentifierBasedOnNode(path.node.id || path.node, 'hoistedMethod');
+            parentScope.push({kind: 'const', id, init: symbolTemplate({NAME: t.stringLiteral(id.name)}).expression});
+            containingClassBodyPath.unshiftContainer('body', t.classProperty(id, Object.assign({}, path.node, {shadow: true}), true));
+            path.replaceWith(thisMemberReferenceTemplate({METHOD: id}).expression);
+          }
           return;
         }
         if (path.node.id) {
