@@ -1,3 +1,5 @@
+const _hoistedMethod = new Symbol('_hoistedMethod');
+
 var
 // NOTE: hoisted
 _hoistedAnonymousFunc2 = (val, set) => <div onClick={
@@ -31,15 +33,17 @@ class B {
 }
 
 class C {
+  [_hoistedMethod] =
+  // NOTE: hoisted to bound bethod
+  val => <div onClick={
+  // NOTE: not hoisted
+  () => this.set(val + 1)}>
+            clicked {val} times
+          </div>;
+
   render() {
     return <State initial={0}>
-      {
-      // NOTE: not hoisted
-      val => <div onClick={
-      // NOTE: not hoisted
-      () => this.set(val + 1)}>
-            clicked {val} times
-          </div>}
+      {this[_hoistedMethod]}
     </State>;
   }
 

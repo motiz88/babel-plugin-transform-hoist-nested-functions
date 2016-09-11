@@ -35,3 +35,19 @@
   function inner(param) {}
   inner.name;
 })();
+
+(class {
+  outer() {
+    // FIXME: unsafely hoisted
+    const inner = () => {};
+    inner.someProp = 1;
+  }
+});
+
+(class {
+  outer() {
+    // NOTE: hoisted to bound method
+    const inner = () => this.constructor.name;
+    inner.name;
+  }
+});

@@ -38,7 +38,7 @@ class C {
   render() { 
     return <State initial={0}>
       {
-        // NOTE: not hoisted
+        // NOTE: hoisted to bound bethod
         (val) =>
           <div onClick={
             // NOTE: not hoisted
