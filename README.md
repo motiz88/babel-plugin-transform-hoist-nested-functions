@@ -12,7 +12,9 @@
 Babel plugin to hoist nested functions to the outermost scope possible without changing their
 contract.
 
-## Example
+## Examples
+
+### Example 1 - basic hoisting
 
 **In**
 
@@ -31,6 +33,36 @@ var _hoistedAnonymousFunc = ({ value }) => renderValue(value);
 
 function renderApp () {
   return renderStateContainer(_hoistedAnonymousFunc);
+}
+```
+
+### Example 2 - nested method hoisting
+
+To enable this transformation, pass the `methods: true` option to the plugin (see below).
+The output code depends on the ES2015 `Symbol` feature and the stage 2 class properties proposal.
+You will _most likely_ want to run `babel-plugin-transform-class-properties` after `transform-hoist-nested-function`.
+
+**In**
+
+```js
+class Foo {
+  bar () {
+    return () => this;
+  }
+}
+```
+
+**Out**
+
+```js
+const _hoistedMethod = new Symbol("_hoistedMethod"),
+
+class Foo {
+  [_hoistedMethod] = () => this;
+
+  bar() {
+    return this[_hoistedMethod];
+  }
 }
 ```
 
@@ -68,7 +100,7 @@ factory() === factory(); // ⬅ value depends on whether foo() is hoisted
 ```
 
 That last expression evaluates to `false` in plain JavaScript, but is `true` if `foo()` has been
-hoisted. 
+hoisted.
 
 More fundamentally, **references to hoisted inner functions are allowed to escape their enclosing
 scopes**. You should determine whether this is appropriate for your code before using this plugin.
@@ -95,9 +127,21 @@ $ npm install --save-dev babel-plugin-transform-hoist-nested-functions
 
 **.babelrc**
 
-```json
+```js
+// without options
 {
   "plugins": ["transform-hoist-nested-functions"]
+}
+
+// with options
+// NOTE: transform-class-properties is required in order to run the code
+{
+  "plugins": [
+    ["transform-hoist-nested-functions", {
+      "methods": true
+    }],
+    "transform-class-properties"
+  ]
 }
 ```
 
@@ -125,7 +169,7 @@ cd babel-plugin-transform-hoist-nested-functions
 npm install
 # ... hackity hack hack ...
 npm run test:local # Including tests (mocha), code coverage (nyc), code style (eslint), type checks
-                   # (flow) and benchmarks.  
+                   # (flow) and benchmarks.
 ```
 
 See package.json for more dev scripts you can use.
