@@ -65,10 +65,10 @@ Consider the following code:
 function factory () {
   return function foo () {}; // foo() will be hoisted right above factory()
 }
-factory() === factory(); // :arrow_left:
+factory() === factory(); // ⬅ value depends on whether foo() is hoisted
 ```
 
-That last expression evaluates to `false` in plain JavaScript, but will be `true` if `foo()` is
+That last expression evaluates to `false` in plain JavaScript, but is `true` if `foo()` has been
 hoisted. 
 
 More fundamentally, **references to hoisted inner functions are allowed to escape their enclosing
