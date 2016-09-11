@@ -94,14 +94,14 @@ export default function ({types: t, template}: {types: BabelTypes, template: Bab
               if (usePath.parent.type === 'AssignmentExpression' && usePath.key === 'left') {
                 return true;
               }
-              if (!t.isLVal(usePath.node)) {
+              if (!usePath.isLVal()) {
                 break;
               }
             }
             return false;
           };
           const uses = binding.referencePaths
-            .filter(refPath => refPath !== path && t.isIdentifier(refPath));
+            .filter(refPath => refPath !== path && refPath.isIdentifier());
 
           if (uses.length) {
             if (uses.some(isUnsafeUse)) {
@@ -118,7 +118,7 @@ export default function ({types: t, template}: {types: BabelTypes, template: Bab
 
         let declaratorPath: ?NodePath = null;
         let declaratorBackupNode: ?BabelNode = null;
-        if (t.isFunctionDeclaration(path.node)) {
+        if (path.isFunctionDeclaration()) {
           declaratorPath = path;
           declaratorBackupNode = declaratorPath.node;
           path.replaceWith(
