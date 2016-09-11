@@ -18,7 +18,7 @@
     "clean": "shx rm -rf lib",
     "coverage:codecov": "nyc report --reporter=text-lcov > coverage.lcov",
     "coverage:html": "nyc report --reporter=html",
-    "download-flow-libs": "cross-env NODE_ENV=production babel-node scripts/download-flow-libs",
+    "download-flow-libs": "cross-env NODE_ENV=production async-node scripts/download-flow-libs",
     "eslint:xunit-to-file": "envcheck ESLINT_FILE && compat \"npm run eslint -- --quiet -f junit --output-file $ESLINT_FILE\"",
     "eslint": "eslint *.js src test decls scripts benchmarks",
     "example": "npm run build && babel example/input.js -o example/output.js",
@@ -36,6 +36,7 @@
     "test": "npm run test:ci"
   },
   "devDependencies": {
+    "async-to-gen": "^1.1.0",
     "babel-cli": "^6.9.0",
     "babel-eslint": "^6.1.2",
     "babel-plugin-istanbul": "^1.0.2",

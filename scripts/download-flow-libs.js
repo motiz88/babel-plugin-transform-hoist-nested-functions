@@ -1,7 +1,7 @@
-import request from 'request';
-import path from 'path';
-import fs from 'fs-promise';
-import pkgBabelTypes from 'babel-types/package.json';
+const request = require('request');
+const path = require('path');
+const fs = require('fs-promise');
+const pkgBabelTypes = require('babel-types/package.json');
 
 const {version} = pkgBabelTypes;
 
