@@ -4,11 +4,11 @@ import type { NodePath, Scope } from 'babel-traverse';
 
 class InnerScopeVisitor {
   referencedScopes: Scope[];
-  seenThisExpression: boolean;
 
   ReferencedIdentifier = (path: NodePath) => {
     const binding = path.scope.getBinding(path.node.name);
     if (binding) {
+      // istanbul ignore next: could be initialized elsewhere
       if (!this.referencedScopes) {
         this.referencedScopes = [];
       }
@@ -17,7 +17,18 @@ class InnerScopeVisitor {
   }
 
   ThisExpression = (path: NodePath) => {
-    this.seenThisExpression = true;
+    let {scope} = path;
+    while (scope && (scope = scope.getFunctionParent())) { // eslint-disable-line no-cond-assign
+      if (!scope.path.isArrowFunctionExpression()) {
+        // istanbul ignore next: could be initialized elsewhere
+        if (!this.referencedScopes) {
+          this.referencedScopes = [];
+        }
+        this.referencedScopes.push(scope);
+        return;
+      }
+      scope = scope.parent;
+    }
   }
 }
 
@@ -61,7 +72,6 @@ export default function ({types: t, template}: {types: BabelTypes, template: Bab
         // or the global scope.
         const innerScope = new InnerScopeVisitor();
         path.traverse(innerScope);
-        if (innerScope.seenThisExpression && t.isArrowFunctionExpression(path.node)) return;
         const referencedScopes = uniqueScopes(innerScope.referencedScopes || []);
         const targetScope = deepestScopeOf(
           path,

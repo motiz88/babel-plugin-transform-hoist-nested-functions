@@ -1,3 +1,5 @@
+var _this = this;
+
 (function () {
   // NOTE: not hoisted
   return () => this;
@@ -10,15 +12,18 @@ class A {
   }
 }
 
-var _B = function B() {
+var
+// NOTE: hoisted
+_B = function B() {
   return this;
 };
 
+var _hoistedAnonymousFunc2 = () => _B;
+
 (function A() {
-  // FIXME: We are too conservative regarding "this" in arrow functions.
-  // The arrow func here is not hoisted due to the embedded ThisExpression,
-  // but it's actually safe because A's "this" is not referenced.
-  // This is made even more apparent by the fact that B itself is (correctly)
-  // hoisted, taking the ThisExpression along with it.
-  return () => _B;
+  // NOTE: hoisted
+  return _hoistedAnonymousFunc2;
 })();
+
+// NOTE: not hoisted
+() => _this;

@@ -11,10 +11,13 @@ class A {
 }
 
 (function A () {
-  // FIXME: We are too conservative regarding "this" in arrow functions.
-  // The arrow func here is not hoisted due to the embedded ThisExpression,
-  // but it's actually safe because A's "this" is not referenced.
-  // This is made even more apparent by the fact that B itself is (correctly)
-  // hoisted, taking the ThisExpression along with it.
-  return () => function B () {return this};
+  // NOTE: hoisted
+  return () =>
+    // NOTE: hoisted
+    function B () {
+      return this;
+    };
 })();
+
+// NOTE: not hoisted
+() => this;
