@@ -10,7 +10,7 @@ fs.readdirSync(benchmarksDir).forEach((benchmarkName) => {
   const benchmarkFile = path.resolve(benchmarksDir, benchmarkName);
 
   const unmodified = setup(require(benchmarkFile));
-  const hoistedCode = transformFileSync(benchmarkFile, fixturesBabelConfig).code;
+  const hoistedCode = transformFileSync(benchmarkFile, fixturesBabelConfig()).code;
   const hoistedFile = path.join(benchmarksDir, path.basename(benchmarkName, '.js') + '.transformed.js');
   fs.writeFileSync(hoistedFile, hoistedCode);
   const hoisted = setup(require(hoistedFile));
