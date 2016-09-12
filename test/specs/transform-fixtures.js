@@ -14,7 +14,9 @@ describe('hoist-nested-functions', () => {
     it(`should ${caseName.split('-').join(' ')}`, () => {
       const fixtureDir = path.join(fixturesDir, caseName);
       const actualPath = path.join(fixtureDir, 'actual.js');
-      const actual = transformFileSync(actualPath, fixturesBabelConfig).code;
+      const optionsPath = path.join(fixtureDir, 'options.json');
+      const options = fs.existsSync(optionsPath) ? JSON.parse(fs.readFileSync(optionsPath).toString()) : {};
+      const actual = transformFileSync(actualPath, fixturesBabelConfig(options)).code;
 
       const expected = fs.readFileSync(
           path.join(fixtureDir, 'expected.js')
