@@ -135,7 +135,7 @@ See package.json for more dev scripts you can use.
 
 PRs are very welcome. Please make sure that `test:local` passes on your branch.
 
-[circle-image]: https://img.shields.io/circleci/project/motiz88/babel-plugin-transform-hoist-nested-functions.svg?style=flat-square
+[circle-image]: https://img.shields.io/circleci/project/motiz88/babel-plugin-transform-hoist-nested-functions/master.svg?style=flat-square
 [circle-url]: https://circleci.com/gh/motiz88/babel-plugin-transform-hoist-nested-functions
 [npm-image]: https://img.shields.io/npm/v/babel-plugin-transform-hoist-nested-functions.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/babel-plugin-transform-hoist-nested-functions
