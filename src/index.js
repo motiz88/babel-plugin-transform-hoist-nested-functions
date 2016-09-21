@@ -84,6 +84,7 @@ export default function ({types: t, template}: {types: BabelTypes, template: Bab
         }
         if (path.node.id) {
           const binding = path.scope.getBinding(path.node.id.name);
+          if (!binding) return;
           const isUnsafeUse = usePath => {
             if (usePath.parent.type !== 'MemberExpression') return false;
             if (usePath.key !== 'object') return false;
