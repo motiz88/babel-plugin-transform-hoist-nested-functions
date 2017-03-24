@@ -78,7 +78,7 @@
     "react-dom": "^15.3.1",
     "request": "^2.74.0",
     "request-promise-native": "^1.0.3",
-    "semantic-release": "^4.3.5",
+    "semantic-release": "^6.3.2",
     "shx": "^0.1.4"
   },
   "keywords": [
