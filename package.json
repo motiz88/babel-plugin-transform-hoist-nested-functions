@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "babel-cli": "^6.9.0",
-    "babel-eslint": "^6.1.2",
+    "babel-eslint": "^7.1.0",
     "babel-plugin-istanbul": "^1.0.2",
     "babel-plugin-syntax-class-properties": "^6.13.0",
     "babel-plugin-syntax-flow": "^6.13.0",
