@@ -36,7 +36,7 @@
     "test": "npm run test:ci"
   },
   "devDependencies": {
-    "babel-cli": "^6.9.0",
+    "babel-cli": "^6.16.0",
     "babel-eslint": "^6.1.2",
     "babel-plugin-istanbul": "^4.1.1",
     "babel-plugin-syntax-class-properties": "^6.13.0",
