@@ -34,16 +34,13 @@ function renderApp () {
 
 ## Motivation
 
-Patterns like [React "render callbacks"]
-(https://discuss.reactjs.org/t/children-as-a-function-render-callbacks/626),
+Patterns like [React "render callbacks"](https://discuss.reactjs.org/t/children-as-a-function-render-callbacks/626),
 that make heavy use of nested functions, incur the nonzero runtime cost of creating those
-functions over and over. JavaScript engines [don't always optimize this cost away]
-(https://bugs.chromium.org/p/v8/issues/detail?id=505).
+functions over and over. JavaScript engines [don't always optimize this cost away](https://bugs.chromium.org/p/v8/issues/detail?id=505).
 
 To mitigate this cost, this plugin moves functions out of inner scopes wherever possible. A
 function can be moved up through any scope that it does not reference explicitly. This is somewhat
-analogous to what [babel-plugin-transform-react-constant-elements]
-(https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-constant-elements/)
+analogous to what [babel-plugin-transform-react-constant-elements](https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-constant-elements/)
 does (and in fact some of the same Babel machinery is applied).
 
 ## Caveats
