@@ -79,7 +79,7 @@
     "request": "^2.74.0",
     "request-promise-native": "^1.0.3",
     "semantic-release": "^4.3.5",
-    "shx": "^0.1.4"
+    "shx": "^0.2.0"
   },
   "keywords": [
     "babel",
