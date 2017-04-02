@@ -6,11 +6,8 @@
     "flowtype"
   ],
   "rules": {
-      "babel/generator-star-spacing": [2, { "before": true, "after": true }],
-      "generator-star-spacing": 0,
       "babel/new-cap": [2, { "newIsCap": true, "capIsNew": false }],
       "new-cap": 0,
-      "babel/func-params-comma-dangle": [2, "never"],
       "no-var": "error",
       "prefer-const": "error",
       "no-console": "error",

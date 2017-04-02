@@ -10,7 +10,7 @@ const files = [{
   file: path.resolve(__dirname, `../decls/babel/v${version}/types.js`)
 }];
 
-(async function() {
+(async function () {
   for (const {url, file} of files) {
     if (!await fs.exists(file)) {
       process.stdout.write(`${url} --> ${path.relative(process.cwd(), file)}`);
