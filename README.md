@@ -1,4 +1,6 @@
 # babel-plugin-transform-hoist-nested-functions
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/motiz88/babel-plugin-transform-hoist-nested-functions.svg)](https://greenkeeper.io/)
 [![circle][circle-image]][circle-url]
 [![npm][npm-image]][npm-url]
 [![coverage][coverage-image]][coverage-url]
