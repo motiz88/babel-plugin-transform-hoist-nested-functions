@@ -1,4 +1,6 @@
 # babel-plugin-transform-hoist-nested-functions
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/motiz88/babel-plugin-transform-hoist-nested-functions.svg)](https://greenkeeper.io/)
 [![circle][circle-image]][circle-url]
 [![npm][npm-image]][npm-url]
 [![coverage][coverage-image]][coverage-url]
@@ -66,16 +68,13 @@ class Foo {
 
 ## Motivation
 
-Patterns like [React "render callbacks"]
-(https://discuss.reactjs.org/t/children-as-a-function-render-callbacks/626),
+Patterns like [React "render callbacks"](https://discuss.reactjs.org/t/children-as-a-function-render-callbacks/626),
 that make heavy use of nested functions, incur the nonzero runtime cost of creating those
-functions over and over. JavaScript engines [don't always optimize this cost away]
-(https://bugs.chromium.org/p/v8/issues/detail?id=505).
+functions over and over. JavaScript engines [don't always optimize this cost away](https://bugs.chromium.org/p/v8/issues/detail?id=505).
 
 To mitigate this cost, this plugin moves functions out of inner scopes wherever possible. A
 function can be moved up through any scope that it does not reference explicitly. This is somewhat
-analogous to what [babel-plugin-transform-react-constant-elements]
-(https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-constant-elements/)
+analogous to what [babel-plugin-transform-react-constant-elements](https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-constant-elements/)
 does (and in fact some of the same Babel machinery is applied).
 
 ## Caveats
@@ -179,7 +178,7 @@ See package.json for more dev scripts you can use.
 
 PRs are very welcome. Please make sure that `test:local` passes on your branch.
 
-[circle-image]: https://img.shields.io/circleci/project/motiz88/babel-plugin-transform-hoist-nested-functions.svg?style=flat-square
+[circle-image]: https://img.shields.io/circleci/project/motiz88/babel-plugin-transform-hoist-nested-functions/master.svg?style=flat-square
 [circle-url]: https://circleci.com/gh/motiz88/babel-plugin-transform-hoist-nested-functions
 [npm-image]: https://img.shields.io/npm/v/babel-plugin-transform-hoist-nested-functions.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/babel-plugin-transform-hoist-nested-functions
